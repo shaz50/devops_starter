@@ -3,15 +3,16 @@ version: 0.2
 phases:
   pre_build:
     commands:
-      echo Nothing to do in the pre_build phase...
+      - echo Logging in to Amazon ECR...
+      - $(aws ecr get-login --no-include-email --region us-east-1)
   build:
     commands:
       - echo Build started on `date`
-      - cd docker
-      - mvn clean install
+      - echo Building the Docker image...          
+      - docker build -t hello_repo_sl:latest .
+      - docker tag hello_repo_sl:latest 359761372359.dkr.ecr.us-east-1.amazonaws.com/hello_repo_sl:latest      
   post_build:
     commands:
-      echo Build completed on `date`
-artifacts:
-  files:
-     docker/target/docker_spring_boot.jar
+      - echo Build completed on `date`
+      - echo Pushing the Docker image...
+      - docker push 359761372359.dkr.ecr.us-east-1.amazonaws.com/hello_repo_sl:latest
