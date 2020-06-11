@@ -14,4 +14,4 @@ phases:
       echo Build completed on `date`
 artifacts:
   files:
-     docker/target/docker-0.0.1-SNAPSHOT.jar
+     docker/target/docker_spring_boot.jar
