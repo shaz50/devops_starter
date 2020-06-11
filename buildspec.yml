@@ -3,16 +3,15 @@ version: 0.2
 phases:
   pre_build:
     commands:
-      - echo Logging in to Amazon ECR...
-      - $(aws ecr get-login --no-include-email --region us-east-1)
+      echo Nothing to do in the pre_build phase...
   build:
     commands:
       - echo Build started on `date`
-      - echo Building the Docker image...          
-      - docker build -t hello_repo_sl:latest .
-      - docker tag hello_repo_sl:latest 359761372359.dkr.ecr.us-east-1.amazonaws.com/hello_repo_sl:latest      
+      - cd docker
+      - mvn clean install
   post_build:
     commands:
-      - echo Build completed on `date`
-      - echo Pushing the Docker image...
-      - docker push 359761372359.dkr.ecr.us-east-1.amazonaws.com/hello_repo_sl:latest
+      echo Build completed on `date`
+artifacts:
+  files:
+     docker/target/docker-0.0.1-SNAPSHOT.jar
